@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to the Application</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Welcome to the Application</h1>
+    <div id="currentDateTime"></div>
+    <button id="openModalBtn">Open Modal</button>
+  </header>
+
+  <div id="modal" style="display: none;">
+    <form>
+      <label for="projectName">Project Name:</label>
+      <input type="text" id="projectName" required>
+      <br>
+      <label for="projectType">Project Type:</label>
+      <select id="projectType">
+        <option value="web">Web</option>
+        <option value="mobile">Mobile</option>
+        <option value="desktop">Desktop</option>
+      </select>
+      <br>
+      <label for="dueDate">Due Date:</label>
+      <input type="text" id="dueDate" required>
+      <br>
+      <button type="button" id="submitBtn">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      function updateDateTime() {
+        const currentDateTime = dayjs().format("MMM DD, YYYY [at] hh:mm:ss A");
+        $("#currentDateTime").text(currentDateTime);
+      }
+      setInterval(updateDateTime, 1000);
+      // Open modal when the button is clicked
+      $("#openModalBtn").click(function() {
+        $("#modal").dialog("open");
+      });
+      // Initialize the datepicker
+      $("#dueDate").datepicker();
+      // Configure the modal dialog
+      $("#modal").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+          Submit: function() {
+            // Handle form submission
+            const projectName = $("#projectName").val();
+            const projectType = $("#projectType").val();
+            const dueDate = $("#dueDate").val();
+            // Do something with the form data
+            console.log("Project Name:", projectName);
+            console.log("Project Type:", projectType);
+            console.log("Due Date:", dueDate);
+            // Close the modal
+            $(this).dialog("close");
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
